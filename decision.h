@@ -22,7 +22,7 @@ struct decision
     int display();
     
     //copy constructor
-    decision(decision & decision_toadd);
+    //decision(decision & decision_toadd);
 
     int copyData(decision & decisionToadd);
 

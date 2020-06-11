@@ -25,15 +25,15 @@ decision::~decision()
 //display
 int decision::display()
 {
-    std::cout << std::endl << "Decision data: " << decisionData << std::endl;
+    std::cout << decisionData << std::endl;
     return 1;
 }
 
-//copy constructor
-decision::decision(decision & decision_toadd)
-{
-    decision(decision_toadd.decisionData);
-}
+////copy constructor
+//decision::decision(decision & decision_toadd)
+//{
+//    decision(decision_toadd.decisionData);
+//}
 
 //The operand copies the parm
 int decision::copyData(decision & decisionToadd)

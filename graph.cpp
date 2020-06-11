@@ -2,77 +2,99 @@
 //is a flexible list.
 #include "graph.h"
 //default constructor for table
-table::table(int size)
+
+vlist::vlist(int size)
 {
     list_size = size;
-    for(int i = 0; i< list_size; i++)
-    {
-        vlist[i].decisionData = NULL;
-        vlist[i].head = NULL;    
-    }
+    verticelist = new vertex[size];
 }
 
-//this is the recursive call
-//int table::addVertex(nodex*& vlist, decision * decision_toadd)
-//{
-//    if(!vlist) return 0; //if !root
-//    //im pretty sure with insretion we need to create the first item:
-//
-//    //recurse to the end of the list
-//    add_vertex(vlist->next, decision_toadd);
-//
-//    //if we find an empty spot out of the limited number
-//    if(!vlist.avertex)
-//    {
-//        //create a new vertex
-//        vlist.avertex->head = NULL;
-//        vlist.avertex->decisionData = new decision;
-//    }
-//    return 1;
-//}
-
 //creates a vertex and adjacency list
-int table::addVertex( vertex * vertex_toadd)
+int vlist::addVertex( vertex * vertex_toadd)
 {
-    //create the node
-    //1. fill the node with data
-    //2. who needed the node?
-    //3. where do we go from here?h
-    
-    //1. empty
-    //2. one  vertex
-    //3. if the array of vertices are full 
-
-    if(!verticelist) //if it's empty
+    for(int i = 0; i < list_size; i++)
     {
-    verticelist = new vertex; //create a new vlist
-    verticelist->decisionData = vertex_toadd->decisionData; //load it's header data
-    }
-    else  //we have at least 1 node
-    {
-        //positional insert
-        //vertex needs to be added (append to head)
-        //append to tail?
-        
-        //edgelists need to be modified
+        if(!verticelist[i].decisionData) //if there's an open spot
+        {
+            verticelist[i].decisionData = new decision(*vertex_toadd->decisionData);
+            return 1; //this should stop
+        }
     }
     return 1;
 }
 
 //default destructor
-table::~table()
+vlist::~vlist()
 {
- list_size = 0;
- vlist = new vertex; //i think?
+    list_size = 0;
+    verticelist = new vertex; //i think?
 }
 
-//this is the default constructor for node
-node::node()
+//findindex (for the 2 keys), adding to the LLL of the 1st and then pointing to the node of the 2nd
+int vlist::findIndex(char * key)
 {
+    //search through vlist for one, make it ref
+    for(int i = 0; i < list_size; i++)
+        if(verticelist[i].decisionData && 
+                strcmp(key, verticelist[i].decisionData->decisionData) == 0)
+            return i;
+    return 0; //failure condition
 }
 
-//this is the default destructor for nodes
-node::~node()
-{
+//createEdges
+int vlist::createEdges(char * first, char * second)
+{ 
+    int firstAddres = findIndex(first); 
+    int secondAddres = findIndex(second);
 
+    node * toadd = new node; //new edge
+    toadd->next = verticelist[firstAddres].head;  //attach the new node 
+    toadd->avertex = &verticelist[secondAddres]; //check if the address of the secondAddres is going through right
+    verticelist[firstAddres].head = toadd; //
+
+    return 1;
+}
+
+int vlist::displayVertices()
+{
+    for(int i = 0; i < list_size; i++)
+    {
+        std::cout << "Position " << i << std::endl;
+        if(verticelist[i].decisionData) //hmmm 
+        {
+            verticelist[i].decisionData->display();
+        }
+        std::cout << std::endl;
+    }
+    return 1;
+}
+
+//displays all edges
+int vlist::displayEdges()
+{
+    //go through each vertice 
+    for(int i = 0; i < list_size; i++)
+    {
+        //the stuff below is mad
+        //print each edglist
+        while(verticelist->head)
+        {
+
+            if(verticelist)
+            {
+                std::cout << "Edge list for: " << std::endl;
+                    verticelist[i].decisionData->display();
+            }
+            //issue: I don't see nodes being added in each case
+            //print every item of the edge list EXCEPT for head
+            if(verticelist->decisionData)
+            {
+                //this unfortunately isn't the actual edge. it's just head's data rn 
+                    std::cout << "edge : " << verticelist->decisionData->display() << std::endl;
+            }
+
+            verticelist->head = verticelist->head->next; //traverse
+        }
+    }    
+    return 1;
 }
