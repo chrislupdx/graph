@@ -1,5 +1,8 @@
-//This is the implementation of the decision struct.
-//it stores business logic and functions that help it operate.
+//Project 5
+//This is the implementation of the decision.h
+//Chris Lu
+//decision.h
+
 #include <iostream>
 #include <cctype>
 #include <cstring>
@@ -12,18 +15,13 @@ struct decision
     //parameterized constructor
     decision(char * data);
 
+    //default destructor
     ~decision();
-   
-    //copies the parm into the operand
-    //int copyDecision();
 
-    //compare
-    //display
+    //Just prints out the data members
     int display();
     
-    //copy constructor
-    //decision(decision & decision_toadd);
-
+    //copies the parm into the operand
     int copyData(decision & decisionToadd);
 
     //comparison, returns 1 if match

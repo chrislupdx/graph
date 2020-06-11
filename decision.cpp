@@ -1,4 +1,8 @@
-//this is the implementation of decisision.cpp
+//Project 5
+//This is the implementation of decision.h
+//Chris Lu
+//decision.cpp
+
 #include "decision.h"
 
 //default constructor
@@ -25,17 +29,11 @@ decision::~decision()
 //display
 int decision::display()
 {
-    std::cout << decisionData << std::endl;
+    std::cout << decisionData;
     return 1;
 }
 
-////copy constructor
-//decision::decision(decision & decision_toadd)
-//{
-//    decision(decision_toadd.decisionData);
-//}
-
-//The operand copies the parm
+//The operand copies the parm into itself
 int decision::copyData(decision & decisionToadd)
 {
     decisionData = new char[strlen(decisionToadd.decisionData) + 1];
@@ -44,7 +42,7 @@ int decision::copyData(decision & decisionToadd)
     return 1;
 }
 
-//compare function: returns 1 on a match
+//compare function: returns 1 on a match, 0 on failure
 int decision::compareData(decision *& decision_tocheck)
 {
     if(strcmp(decisionData, decision_tocheck->decisionData) == 0)
